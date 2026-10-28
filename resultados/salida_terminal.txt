@@ -1,0 +1,176 @@
+
+===== 1. CARGA =====
+hurto_comercio_residencias.csv -> columnas: ['departamento', 'municipio', 'codigo_dane', 'armas_medios', 'fecha_hecho', 'genero', 'grupo_etario', 'tipo_de_hurto', 'cantidad']
+hurto_vehiculos.csv -> columnas: ['departamento', 'municipio', 'codigo_dane', 'armas_medios', 'fecha_hecho', 'genero', 'grupo_etario', 'tipo_de_hurto', 'cantidad']
+Registros cargados: 1310019
+root
+ |-- fecha_txt: string (nullable = true)
+ |-- departamento: string (nullable = true)
+ |-- municipio: string (nullable = true)
+ |-- arma_medio: string (nullable = true)
+ |-- tipo_hurto: string (nullable = true)
+ |-- cantidad: integer (nullable = true)
+
+
+===== 2. LIMPIEZA =====
+Antes: 1310019 | Después: 1310018 | Eliminados: 1
++------------+-----------+------------+---------------------------+--------+----------+----+---+----------+
+|departamento|municipio  |arma_medio  |tipo_hurto                 |cantidad|fecha     |anio|mes|dia_semana|
++------------+-----------+------------+---------------------------+--------+----------+----+---+----------+
+|BOGOTA      |BOGOTÁ D.C.|NO REPORTADO|HURTO ENTIDADES COMERCIALES|1       |2026-07-15|2026|7  |4         |
+|SANTANDER   |GAMBITA    |NO REPORTADO|HURTO ENTIDADES COMERCIALES|1       |2026-07-24|2026|7  |6         |
+|BOGOTA      |BOGOTÁ D.C.|NO REPORTADO|HURTO ENTIDADES COMERCIALES|1       |2026-06-02|2026|6  |3         |
+|BOGOTA      |BOGOTÁ D.C.|NO REPORTADO|HURTO ENTIDADES COMERCIALES|1       |2026-06-19|2026|6  |6         |
+|BOGOTA      |BOGOTÁ D.C.|NO REPORTADO|HURTO ENTIDADES COMERCIALES|1       |2026-01-16|2026|1  |6         |
++------------+-----------+------------+---------------------------+--------+----------+----+---+----------+
+only showing top 5 rows
+
+===== 3. EDA =====
+Total de hurtos (suma de cantidad): 1310018
++-------+--------------------+
+|summary|            cantidad|
++-------+--------------------+
+|  count|             1310018|
+|   mean|                 1.0|
+| stddev|2.049720069194801...|
+|    min|                   1|
+|    max|                   1|
++-------+--------------------+
+
+
+--- Top 10 departamentos ---
++------------+------+
+|departamento|total |
++------------+------+
+|BOGOTA      |290175|
+|ANTIOQUIA   |230330|
+|VALLE       |163003|
+|ATLÁNTICO   |59768 |
+|CUNDINAMARCA|50902 |
+|CAUCA       |48358 |
+|SANTANDER   |48183 |
+|META        |37717 |
+|HUILA       |36553 |
+|CESAR       |34683 |
++------------+------+
+
+
+--- Top 10 municipios ---
++-------------+------+
+|municipio    |total |
++-------------+------+
+|BOGOTÁ D.C.  |290175|
+|MEDELLÍN     |144306|
+|CALI         |113113|
+|BARRANQUILLA |37689 |
+|VILLAVICENCIO|24499 |
+|POPAYÁN      |23294 |
+|CARTAGENA    |21247 |
+|CÚCUTA       |20791 |
+|BUCARAMANGA  |20008 |
+|BELLO        |18302 |
++-------------+------+
+
+
+--- Hurtos por año ---
++----+------+
+|anio|total |
++----+------+
+|2010|34404 |
+|2011|46025 |
+|2012|53361 |
+|2013|54703 |
+|2014|53426 |
+|2015|57522 |
+|2016|62500 |
+|2017|102071|
+|2018|108163|
+|2019|107845|
+|2020|80615 |
+|2021|87664 |
+|2022|96067 |
+|2023|96320 |
+|2024|119251|
+|2025|96166 |
+|2026|53915 |
++----+------+
+
+
+--- Hurtos por mes ---
++---+------+
+|mes|total |
++---+------+
+|1  |121214|
+|2  |115336|
+|3  |116496|
+|4  |108466|
+|5  |114637|
+|6  |110452|
+|7  |113242|
+|8  |107783|
+|9  |103966|
+|10 |105734|
+|11 |99943 |
+|12 |92749 |
++---+------+
+
+
+--- Hurtos por día de la semana ---
++----------+------+
+|dia_semana|total |
++----------+------+
+|1         |156788|
+|2         |183949|
+|3         |190908|
+|4         |196372|
+|5         |195482|
+|6         |197256|
+|7         |189263|
++----------+------+
+
+
+--- Top 10 tipos de hurto ---
++---------------------------+------+
+|tipo_hurto                 |total |
++---------------------------+------+
+|HURTO ENTIDADES COMERCIALES|583312|
+|HURTO MOTOCICLETAS         |497736|
+|HURTO AUTOMOTORES          |158899|
+|HURTO RESIDENCIAS          |70071 |
++---------------------------+------+
+
+
+--- Top 10 armas/medios ---
++---------------------------+------+
+|arma_medio                 |total |
++---------------------------+------+
+|SIN EMPLEO DE ARMAS        |629671|
+|ARMA DE FUEGO              |268107|
+|LLAVE MAESTRA              |231457|
+|CONTUNDENTES               |83678 |
+|PALANCAS                   |40687 |
+|ARMA BLANCA / CORTOPUNZANTE|28662 |
+|NO REPORTADO               |20257 |
+|ESCOPOLAMINA               |4086  |
+|CORTANTES                  |2695  |
+|PUNZANTES                  |447   |
++---------------------------+------+
+
+
+===== 4. EJEMPLO CON RDD =====
+Departamentos distintos (count): 33
+Top 5 (take): [('BOGOTA', 290175), ('ANTIOQUIA', 230330), ('VALLE', 163003), ('ATLÁNTICO', 59768), ('CUNDINAMARCA', 50902)]
+Total general (reduce): 1310018
+
+===== 5. GRÁFICOS =====
+Guardado: resultados/01_top_departamentos.png
+Guardado: resultados/02_top_municipios.png
+Guardado: resultados/03_hurtos_por_anio.png
+Guardado: resultados/04_hurtos_por_mes.png
+Guardado: resultados/05_hurtos_por_dia.png
+Guardado: resultados/07_tipos_de_hurto.png
+Guardado: resultados/06_armas_medios.png
+
+Datos limpios guardados en resultados/hurtos_limpios_parquet
+
+Proceso batch finalizado.

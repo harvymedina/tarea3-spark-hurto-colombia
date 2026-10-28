@@ -1,0 +1,5 @@
+venv/
+datos/
+resultados/hurtos_limpios_parquet/
+__pycache__/
+.DS_Store
